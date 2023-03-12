@@ -1,13 +1,20 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PasswordManagerSecurityDemo.Models.DataStore;
+using PasswordManagerSecurityDemo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(context => context.UseSqlite("Data Source=passwords.topsecret"));
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { 
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+    options.LoginPath = "/auth";
+});
+builder.Services.AddTransient(typeof(AuthenticationService));
+builder.Services.AddTransient(typeof(ContentService));
 
 var app = builder.Build();
 
@@ -18,6 +25,12 @@ if (!app.Environment.IsDevelopment()) {
     app.UseHsts();
 }
 
+app.UseCors(cors => cors
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+);
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -27,6 +40,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Content}/{action=Index}/{id?}");
 
 app.Run();

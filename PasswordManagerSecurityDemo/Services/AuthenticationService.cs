@@ -16,7 +16,7 @@ namespace PasswordManagerSecurityDemo.Services {
         }
 
         public async Task<bool> LoginAsync(string username, string password) {
-            User? user = context.Database.SqlQuery<User>($"SELECT * FROM Users WHERE username={username} AND password={password}").FirstOrDefault();
+            User? user = context.Database.SqlQuery<User>($"SELECT * FROM Users WHERE username='{username}' AND password='{password}'").FirstOrDefault();
             if (user == null) throw new ArgumentException("User not found");
 
             var claims = new List<Claim> {
