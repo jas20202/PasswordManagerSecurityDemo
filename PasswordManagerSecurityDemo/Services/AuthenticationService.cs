@@ -10,21 +10,25 @@ using System.Security.Claims;
 namespace PasswordManagerSecurityDemo.Services {
     public class AuthenticationService {
         private readonly ApplicationDbContext context;
-        private static HttpContext httpContext => new HttpContextAccessor().HttpContext;
-        public AuthenticationService(ApplicationDbContext applicationDbContext) {
+        
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public AuthenticationService(ApplicationDbContext applicationDbContext, IHttpContextAccessor httpContextAccessor) {
             context = applicationDbContext;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> LoginAsync(string username, string password) {
-            User? user = context.Database.SqlQuery<User>($"SELECT * FROM Users WHERE username='{username}' AND password='{password}'").FirstOrDefault();
+            var query = $"SELECT * FROM Users WHERE Username='{username}' AND Password='{password}'";
+            User? user = context.Users.FromSqlRaw(query).FirstOrDefault();
             if (user == null) throw new ArgumentException("User not found");
 
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            await httpContext.SignInAsync(
+            await httpContextAccessor.HttpContext!.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity));
 

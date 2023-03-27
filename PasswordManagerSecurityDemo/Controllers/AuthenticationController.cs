@@ -17,7 +17,7 @@ namespace PasswordManagerSecurityDemo.Controllers {
 
         [Route("login")]
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password) { 
+        public async Task<IActionResult> Login([FromForm] string username, [FromForm] string password) { 
             await authenticationService.LoginAsync(username, password);
             return RedirectToAction("Index", "Content");
         }

@@ -3,9 +3,10 @@
 *@
 @{}
 
-<form>
+<form asp-action="Login" asp-controller="Authentication" method="post">
     <label for="usenamefield">Username</label> <br />
-    <input id="usernamefield" type="text" required="required"/> <br />
+    <input name ="username" id="usernamefield" type="text" required="required" /> <br />
     <label for="passwordfield">Passwort</label> <br />
-    <input id="passwordfield" type="password" required="required" />
+    <input name="password" id="passwordfield" type="password" required="required" /> <br />
+    <input type="submit" value="Login">
 </form>

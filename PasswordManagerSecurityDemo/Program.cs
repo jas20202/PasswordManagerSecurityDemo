@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddCors();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(context => context.UseSqlite("Data Source=passwords.topsecret"));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { 
@@ -17,6 +18,10 @@ builder.Services.AddTransient(typeof(AuthenticationService));
 builder.Services.AddTransient(typeof(ContentService));
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope()) {
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.EnsureCreatedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
@@ -31,13 +36,13 @@ app.UseCors(cors => cors
     .AllowAnyHeader()
 );
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
 app.UseRouting();
+app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Content}/{action=Index}/{id?}");

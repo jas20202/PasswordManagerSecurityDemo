@@ -30,11 +30,11 @@ namespace PasswordManagerSecurityDemo.Services {
         }
 
         public List<PasswordEntry> GetAllPasswordEntries(string userId) {
-            return context.Database.SqlQuery<PasswordEntry>($"SELECT * FROM PasswordEntries WHERE userid='{userId}'").ToList();
+            return context.PasswordEntries.FromSqlRaw($"SELECT * FROM PasswordEntries WHERE userid='{userId}'").ToList();
         }
 
         public List<PasswordEntry> SearchForPasswordEntry(string name, string userId) {
-            return context.Database.SqlQuery<PasswordEntry>($"SELECT * FROM PasswordEntries WHERE userid='{userId}' AND name like '{name}%'").ToList();
+            return context.PasswordEntries.FromSqlRaw($"SELECT * FROM PasswordEntries WHERE userid='{userId}' AND name like '{name}%'").ToList();
         }
     }
 }
