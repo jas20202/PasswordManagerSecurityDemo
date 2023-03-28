@@ -21,5 +21,11 @@ namespace PasswordManagerSecurityDemo.Controllers {
             await authenticationService.LoginAsync(username, password);
             return RedirectToAction("Index", "Content");
         }
+
+        [Route("logout")]
+        public async Task<IActionResult> Logout() {
+            await authenticationService.LogoutAsync();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -1,5 +1,42 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model List<PasswordManagerSecurityDemo.Models.Entities.PasswordEntry>;
 @{
+    ViewData["CanLogout"] = true;
 }
+<script defer>
+    $(() => {
+        (new URL(window.location.href)).searchParams.forEach((x, y) =>
+		document.getElementById(y).value = x);
+    })
+</script>
+<h2>Hallo @ViewData["Username"]</h2>
+<form method="get" asp-action="Search" asp-controller="Content" id="search-form" class="search">
+    <div class="did-floating-label-content with-button">
+        <input class="did-floating-input" type="text" placeholder=" " autocomplete="off" name="name" id="name"/>
+        <label class="did-floating-label">Search...</label>
+    </div>
+    <a href="/" class="button button-search">X</a>
+</form>
+@if(Model.Count <= 0) {
+    <h3>No match found for <span class="red-dark-highlight"><script defer>document.write("'" + (new URL(window.location.href)).searchParams.get('name') + "'")</script></span></h3>
+} else {
+    <table class="password-table">
+        <tr class="table-header">
+            <th>Name</th>
+            <th>Website</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        @foreach(var pass in Model) {
+            <tr>
+                <td>@pass.Name</td>
+                <td>@pass.Website</td>
+                <td>@pass.Username</td>
+                <td class="copy-td"><span>@String.Join("",pass.Password.Select(e=>"*"))</span> <button onclick="window.navigator.clipboard.writeText('@pass.Password')" class="button"><span class='fa-solid fa-copy'></span></button></td>
+            </tr>
+        }
+    </table>
+}
+<button class="button">Add Password</button>

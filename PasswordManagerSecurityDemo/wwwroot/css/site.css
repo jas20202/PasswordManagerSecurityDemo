@@ -1,22 +1,270 @@
+* {
+    box-sizing: border-box;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+}
+
+@font-face {
+    font-family: "JetBrainsMono Nerd Font";
+    src: local(JetBrains Mono Bold Nerd Font Complete), url("/fonts/SUYkVPQNzqpyuvGu.woff2") format("woff2"), url("/fonts/Q1FiBQcBNoPgmqCz.ttf") format("truetype");
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "JetBrainsMono Nerd Font";
+    src: local(JetBrains Mono Regular Nerd Font Complete), url("/fonts/vpi7wY9hI3YBaZK1.woff2") format("woff2"), url("/fonts/8GC6i3O-8O4u_YJ0.ttf") format("truetype");
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 400;
+}
+
+:root {
+    --background-dark: #21252B;
+    --background: #282c34;
+    --white: #abb2bf;
+    --gold: #e5c07b;
+    --blue: #61afef;
+    --green: #98c379;
+    --onedark-gray-dark-dark: #454b54;
+    --onedark-gray-dark: #5c6370;
+    --red: #e06c75;
+    --red-dark: #b15252;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background: var(--background-dark);
+}
+
+h3, h2, h1 {
+    font-family: 'JetBrainsMono Nerd Font';
+    text-align: center;
+    color: var(--white);
+}
+
+a, details {
+    color: var(--white);
+    text-decoration: underline;
+    font-weight: bold;
+    font-family: 'JetBrainsMono Nerd Font';
+    font-size: large;
+    margin: 0 20px;
+}
+
+.green-highlight {
+    color: var(--green);
+}
+
+.blue-highlight {
+    color: var(--blue);
+}
+
+.gold-highlight {
+    color: var(--gold);
+}
+
+.white-highlight {
+    color: var(--white);
+    text-shadow: 5px 5px 0 var(--onedark-gray-dark-dark);
+}
+
+.red-dark-highlight {
+    color: var(--red-dark);
+}
+
+#main-container {
+    color: var(--white);
+    padding-top: 5em;
+}
+
+.left {
+    text-align: left;
+    margin: 1em 2em;
+}
+
+.right {
+    text-align: right;
+    margin: 1em 2em;
+}
+
+
+p {
+    color: var(--white);
+}
+
+.container {
+    display:  block;
+    place-items: center;
+    align-items: center;
+}
+
+.login-form {
+    margin-top: 9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-title {
+    margin-bottom: 2em;
+}
+
+.header-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*---------------------*/
+
+.did-floating-label-content {
+    position: relative;
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.did-floating-label {
+    color: var(--red);
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'JetBrainsMono Nerd Font';
+    position: absolute;
+    pointer-events: none;
+    left: 15px;
+    top: 12px;
+    padding: 0 5px;
+    background: var(--background-dark);
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.did-floating-input, .did-floating-select {
+    font-size: 12px;
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 18px 20px;
+    background: var(--background-dark);
+    color: var(--white);
+    font-weight: bold;
+    font-size: large;
+    border: 1px solid var(--onedark-gray-dark);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+    .did-floating-input:focus {
+        outline: none;
+    }
+
+        .did-floating-input:focus ~ .did-floating-label {
+            top: -8px;
+            font-size: 13px;
+        }
+
+    .did-floating-input:not(:placeholder-shown) ~ .did-floating-label {
+        top: -8px;
+        font-size: 13px;
+    }
+
+/*---------------------*/
+
+.button {
+    height: 38px;
+    outline: none;
+    cursor: pointer;
+    border: var(--onedark-gray-dark-dark) 1px solid;
+    border-radius: 4px;
+    background-color: var(--onedark-gray-dark-dark);
+    color: var(--white);
+    font-size: 1rem;
+    margin: 0 auto;
+    display: block;
+    text-decoration: none;
+}
+
+    .button:hover {
+        background-color: var(--onedark-gray-dark);
+    }
+
+a.button {
+    padding: .4em 1em;
+    margin: inherit;
+    margin-right: 2em;
+    font-size: unset;
+    display: block;
+}
+
+.did-floating-label-content.with-button .did-floating-input,
+.did-floating-label-content.with-button .did-floating-select {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-dark);
+    padding: 1em 0;
+    position: relative;
+}
+
+    .search.button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+.password-table {
+    margin: 3em auto;
+    color: var(--white);
+    font-family: 'JetBrainsMono Nerd Font';
+}
+
+.table-header {
+    color: var(--red);
+    font-weight: bold;
+    font-size: large;
+}
+
+.table-header th {
+    padding: 1em 0;
+}
+
+th, td {
+    padding: 0 3em;
+}
+
+tr:nth-child(2n) {
+    background: var(--background);
+}
+
+.copy-td {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 0;
+}
+.copy-td span {
+    line-height: 2.3em;
+}
+.copy-td .button {
+    background: none !important;
+    border: none;
+    width: 2em;
+    margin: 0;
 }

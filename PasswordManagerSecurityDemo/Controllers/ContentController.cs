@@ -18,6 +18,7 @@ namespace PasswordManagerSecurityDemo.Controllers {
                 return Forbid();
             }
             
+            ViewData["Username"] = HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
             return View(contentService.GetAllPasswordEntries(userID));
         }
 
@@ -28,7 +29,8 @@ namespace PasswordManagerSecurityDemo.Controllers {
                 return Forbid();
             }
 
-            return View(contentService.SearchForPasswordEntry(name, userID));
+            ViewData["Username"] = HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
+            return View("Index", contentService.SearchForPasswordEntry(name, userID));
         }
 
         [Route("add")]

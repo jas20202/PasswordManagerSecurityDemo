@@ -34,5 +34,9 @@ namespace PasswordManagerSecurityDemo.Services {
 
             return true;
         }
+
+        public async Task LogoutAsync() {
+            await httpContextAccessor.HttpContext!.SignOutAsync();
+        }
     }
 }

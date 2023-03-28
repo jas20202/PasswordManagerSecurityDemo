@@ -3,10 +3,15 @@
 *@
 @{}
 
-<form asp-action="Login" asp-controller="Authentication" method="post">
-    <label for="usenamefield">Username</label> <br />
-    <input name ="username" id="usernamefield" type="text" required="required" /> <br />
-    <label for="passwordfield">Passwort</label> <br />
-    <input name="password" id="passwordfield" type="password" required="required" /> <br />
-    <input type="submit" value="Login">
+<form asp-action="Login" asp-controller="Authentication" method="post" class="login-form">
+    <h1 class="red-dark-highlight form-title">Hello 🙂</h1>
+    <div class="did-floating-label-content">
+        <input class="did-floating-input" type="text" placeholder=" " autocomplete="off" name="username" />
+        <label class="did-floating-label">Username</label>
+    </div>
+    <div class="did-floating-label-content">
+        <input class="did-floating-input" type="password" placeholder=" " autocomplete="off" name="password" />
+        <label class="did-floating-label">Password</label>
+    </div>
+    <button type="submit" class="button">Login</button>
 </form>
