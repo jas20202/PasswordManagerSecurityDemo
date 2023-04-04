@@ -23,7 +23,7 @@ namespace PasswordManagerSecurityDemo.Services {
             if (user == null) throw new ArgumentException("User not found");
 
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
 
